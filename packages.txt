@@ -1,0 +1,1 @@
+# ไม่มี system packages ที่จำเป็น
