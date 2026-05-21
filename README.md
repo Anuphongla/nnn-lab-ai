@@ -1,3 +1,14 @@
+---
+title: Nnnlab Demi
+emoji: 🚀
+colorFrom: blue
+colorTo: indigo
+sdk: streamlit
+sdk_version: "1.32.0"
+app_file: app.py
+pinned: false
+---
+
 # MilkLab° AI — Demi RAG Chatbot
 
 Template สำหรับ Session 3 ของคอร์ส STSW
