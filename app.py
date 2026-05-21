@@ -3,13 +3,13 @@ import os
 
 import streamlit as st
 from dotenv import load_dotenv
-from google import genai
+from huggingface_hub import InferenceClient
 
 from rag_engine import RAGEngine
 
 load_dotenv()
-client = genai.Client(api_key=os.getenv("GOOGLE_API_KEY"))
-MODEL = "gemini-2.5-flash"
+client = InferenceClient(api_key=os.getenv("HF_TOKEN"))
+MODEL = "Qwen/Qwen2.5-7B-Instruct"  # เปลี่ยนเป็นโมเดลบน Hugging Face ที่ต้องการได้
 
 
 @st.cache_resource
@@ -73,8 +73,9 @@ if prompt:
 คำถามจากนายจ๋า: {prompt}
 """
     try:
-        response = client.models.generate_content(model=MODEL, contents=full_prompt)
-        answer = response.text
+        messages = [{"role": "user", "content": full_prompt}]
+        response = client.chat_completion(model=MODEL, messages=messages, max_tokens=800)
+        answer = response.choices[0].message.content
     except Exception as e:
         answer = f"ขออภัยจ้ะนายจ๋า ระบบของอับดุลมีปัญหาเล็กน้อย ({e})"
 
