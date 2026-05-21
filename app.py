@@ -7,6 +7,9 @@ from huggingface_hub import InferenceClient
 
 from rag_engine import RAGEngine
 
+# Set page config FIRST - must be before any other Streamlit commands
+st.set_page_config(page_title="ChillPad Store", page_icon="❄️")
+
 load_dotenv()
 client = InferenceClient(api_key=os.getenv("HF_TOKEN"))
 MODEL = "Qwen/Qwen2.5-7B-Instruct"  # เปลี่ยนเป็นโมเดลบน Hugging Face ที่ต้องการได้
@@ -18,8 +21,6 @@ def load_rag():
 
 
 rag = load_rag()
-
-st.set_page_config(page_title="ChillPad Store", page_icon="❄️")
 st.title("❄️ อับดุล ผู้ช่วย AI ของ ChillPad Store")
 st.caption("อับดุลเอ๊ย! ถามได้ตอบได้ เรื่องสเปคพัดลม รุ่นที่รองรับ หรือการรับประกัน เชิญนายจ๋าถามได้เลย")
 
