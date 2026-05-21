@@ -45,7 +45,7 @@ for msg in st.session_state.messages:
 
 # --- Chat Input ---
 # ใช้ข้อความจาก Quick Prompt ถ้ามีการกดปุ่ม หรือรับจาก Chat Input
-prompt = st.chat_input("พิมพ์ถามอับดุลได้เลยจ้ะนายจ๋า...")
+prompt = st.chat_input("พิมพ์ถามอับดุลได้เลยจ้ะนายจ๋า....")
 
 if quick_prompt:
     prompt = quick_prompt
