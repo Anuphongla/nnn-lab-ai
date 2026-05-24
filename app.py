@@ -1,10 +1,43 @@
 import os
+import datetime
 
 import streamlit as st
+import gspread
 from dotenv import load_dotenv
 from huggingface_hub import InferenceClient
 
 from rag_engine import RAGEngine
+
+def save_booking_to_sheet(booking_data):
+    try:
+        # อ่าน path ของไฟล์ service account และ sheet id จาก .env
+        service_account_file = os.getenv("GOOGLE_SERVICE_ACCOUNT_FILE", "credentials.json")
+        sheet_id = os.getenv("GOOGLE_SHEETS_ID")
+        
+        # อ่านไฟล์ service account
+        gc = gspread.service_account(filename=service_account_file)
+        
+        # เปิด Google Sheets ด้วย ID ถ้ามี ไม่งั้นเปิดด้วยชื่อไฟล์
+        if sheet_id:
+            sh = gc.open_by_key(sheet_id)
+        else:
+            sh = gc.open("ChillPad_Bookings")
+            
+        worksheet = sh.sheet1
+        
+        row = [
+            booking_data["id"],
+            booking_data["name"],
+            booking_data["price"],
+            booking_data["date"],
+            booking_data["time"]
+        ]
+        worksheet.append_row(row)
+        return True, None
+    except FileNotFoundError:
+        return False, f"⚠️ ไม่พบไฟล์ {service_account_file} กรุณาตรวจสอบว่ามีไฟล์นี้อยู่ในโปรเจกต์"
+    except Exception as e:
+        return False, f"⚠️ ไม่สามารถบันทึกลง Google Sheets ได้: {e}"
 
 # --- Config & Initialization ---
 st.set_page_config(page_title="ChillPad Store", page_icon="❄️", layout="wide")
@@ -207,15 +240,23 @@ elif menu == "🛒 สินค้าแนะนำ":
                 # Book button
                 if st.button(f"📦 จองเลย", key=f"book_{product['id']}", use_container_width=True):
                     # Add booking
+                    now = datetime.datetime.now()
                     booking = {
                         "id": product['id'],
                         "name": product['name'],
                         "price": product['price'],
-                        "date": "24 พ.ค. 2566",
-                        "time": "เดี๋ยวนี้"
+                        "date": now.strftime("%d/%m/%Y"),
+                        "time": now.strftime("%H:%M:%S")
                     }
                     st.session_state.bookings.append(booking)
                     st.session_state.selected_booking = booking
+                    
+                    # บันทึกลง Google Sheets
+                    success, msg = save_booking_to_sheet(booking)
+                    if not success:
+                        st.session_state.sheet_error = msg
+                    else:
+                        st.session_state.sheet_error = None
     
     # Show receipt below products if booking exists
     if "selected_booking" in st.session_state:
@@ -234,4 +275,8 @@ elif menu == "🛒 สินค้าแนะนำ":
         st.markdown("---")
         st.markdown("**หมายเหตุ:** ขอให้แจ้งเลขจองด้านบนเมื่อมารับสินค้า")
         st.markdown("**ชำระเงิน:** ที่หน้าร้าน (เงินสด/QR)")
-        st.success("✅ จองสำเร็จ!")
+        
+        if st.session_state.get("sheet_error"):
+            st.warning(f"จองสำเร็จในระบบ แต่: {st.session_state.sheet_error}")
+        else:
+            st.success("✅ จองสำเร็จ และบันทึกข้อมูลลง Google Sheets แล้ว!")
