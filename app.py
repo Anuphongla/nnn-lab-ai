@@ -106,14 +106,14 @@ if menu == "💬 ปรึกษาอับดุล (AI Assistant)":
 
 elif menu == "🛒 สินค้าแนะนำ":
     st.title("🔥 สินค้าขายดีประจำเดือน")
-    st.info("💡 เลือกชมสินค้าไฮไลท์ของเรา พร้อมโปรโมชั่นพิเศษ!")
+    st.info("💡 บริการจองสินค้าออนไลน์! สามารถมารับและชำระเงินได้ที่หน้าร้านเลยครับ")
     
     st.markdown("---")
     
     sc1, sc2, sc3 = st.columns(3)
     
     with sc1:
-        st.image("https://images.unsplash.com/photo-1614812513172-567d2fe9bf62?q=80&w=400&auto=format&fit=crop", caption="รุ่น Top สำหรับสายเกม")
+        st.image("https://placehold.co/400x300/e0f7fa/004d99?text=ChillMaster+Pro", caption="รุ่น Top สำหรับสายเกม")
         st.subheader("❄️ ChillMaster Pro")
         st.markdown("**⭐ 4.9** (รีวิว 120+)")
         st.metric(label="ราคาพิเศษ", value="฿ 890", delta="-10% จากราคาปกติ")
@@ -124,12 +124,13 @@ elif menu == "🛒 สินค้าแนะนำ":
         with st.expander("📝 ดูสเปคแบบละเอียด"):
             st.markdown("- พัดลมขนาด 140mm จำนวน 2 ตัว\n- พัดลมขนาด 60mm จำนวน 4 ตัว\n- ไฟ RGB ปรับได้ 5 โหมด\n- ขาตั้งปรับได้ 3 ระดับ")
             
-        if st.button("🛒 เพิ่มลงตะกร้า", key="btn1", use_container_width=True):
-            st.toast("✅ นำ 'ChillMaster Pro' ใส่ตะกร้าเรียบร้อยแล้ว!")
+        if st.button("📦 จองสินค้ารับหน้าร้าน", key="btn1", use_container_width=True):
+            st.toast("✅ จอง 'ChillMaster Pro' สำเร็จ! รหัสจอง: #C001 กรุณาชำระเงินที่หน้าร้านครับ")
+            st.success("🎉 จองสำเร็จ! โปรดแจ้งรหัส **#C001** เพื่อรับสินค้าที่สาขา ไอที สแควร์")
             st.balloons()
         
     with sc2:
-        st.image("https://images.unsplash.com/photo-1585215712169-2f2fbd726912?q=80&w=400&auto=format&fit=crop", caption="ขายดีอันดับ 1 สำหรับคนทำงาน")
+        st.image("https://placehold.co/400x300/e0f7fa/004d99?text=Silent+Breeze+V2", caption="ขายดีอันดับ 1 สำหรับคนทำงาน")
         st.subheader("🍃 Silent Breeze V2")
         st.markdown("**⭐ 4.7** (รีวิว 85)")
         st.metric(label="ราคาพิเศษ", value="฿ 590", delta="สินค้าขายดี", delta_color="off")
@@ -140,11 +141,12 @@ elif menu == "🛒 สินค้าแนะนำ":
         with st.expander("📝 ดูสเปคแบบละเอียด"):
             st.markdown("- พัดลมแกนคู่ หมุนเงียบ < 20dB\n- รองรับโน๊ตบุ๊คขนาด 13 - 15.6 นิ้ว\n- วัสดุอลูมิเนียมระบายความร้อนได้ดี")
             
-        if st.button("🛒 เพิ่มลงตะกร้า", key="btn2", use_container_width=True):
-            st.toast("✅ นำ 'Silent Breeze V2' ใส่ตะกร้าเรียบร้อยแล้ว!")
+        if st.button("📦 จองสินค้ารับหน้าร้าน", key="btn2", use_container_width=True):
+            st.toast("✅ จอง 'Silent Breeze V2' สำเร็จ! รหัสจอง: #S002 กรุณาชำระเงินที่หน้าร้านครับ")
+            st.success("🎉 จองสำเร็จ! โปรดแจ้งรหัส **#S002** เพื่อรับสินค้าที่สาขา ไอที สแควร์")
         
     with sc3:
-        st.image("https://images.unsplash.com/photo-1593640408182-31c70c8268f5?q=80&w=400&auto=format&fit=crop", caption="น้ำหนักเบา พกพาสะดวก")
+        st.image("https://placehold.co/400x300/e0f7fa/004d99?text=Travel+Pad+Lite", caption="น้ำหนักเบา พกพาสะดวก")
         st.subheader("✈️ Travel Pad Lite")
         st.markdown("**⭐ 4.5** (รีวิว 40)")
         st.metric(label="ราคาพิเศษ", value="฿ 350", delta="-50 บาท (โค้ดลด)")
@@ -155,6 +157,7 @@ elif menu == "🛒 สินค้าแนะนำ":
         with st.expander("📝 ดูสเปคแบบละเอียด"):
             st.markdown("- พับเก็บได้ ขนาดเท่าฝ่ามือ\n- น้ำหนักเพียง 250 กรัม\n- พัดลม 1 ตัว ความเร็วสูง 2500 RPM")
             
-        if st.button("🛒 เพิ่มลงตะกร้า", key="btn3", use_container_width=True):
-            st.toast("✅ นำ 'Travel Pad Lite' ใส่ตะกร้าเรียบร้อยแล้ว!")
+        if st.button("📦 จองสินค้ารับหน้าร้าน", key="btn3", use_container_width=True):
+            st.toast("✅ จอง 'Travel Pad Lite' สำเร็จ! รหัสจอง: #T003 กรุณาชำระเงินที่หน้าร้านครับ")
+            st.success("🎉 จองสำเร็จ! โปรดแจ้งรหัส **#T003** เพื่อรับสินค้าที่สาขา ไอที สแควร์")
             st.snow()
