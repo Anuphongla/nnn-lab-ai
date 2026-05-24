@@ -10,8 +10,12 @@ from rag_engine import RAGEngine
 
 def save_booking_to_sheet(booking_data):
     try:
+        # กำหนด path ของไฟล์ credentials.json ให้อ้างอิงจากโฟลเดอร์ของไฟล์ app.py
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        default_cred_path = os.path.join(current_dir, "credentials.json")
+        
         # อ่าน path ของไฟล์ service account และ sheet id จาก .env
-        service_account_file = os.getenv("GOOGLE_SERVICE_ACCOUNT_FILE", "credentials.json")
+        service_account_file = os.getenv("GOOGLE_SERVICE_ACCOUNT_FILE", default_cred_path)
         sheet_id = os.getenv("GOOGLE_SHEETS_ID")
         
         # อ่านไฟล์ service account
