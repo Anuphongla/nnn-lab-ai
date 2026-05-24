@@ -26,26 +26,20 @@ with st.sidebar:
     
     st.divider()
     
+    # Navigation
+    menu = st.radio("เมนูหลัก", ["💬 ปรึกษาอับดุล (AI Assistant)", "🛒 สินค้าแนะนำ"])
+    
+    st.divider()
+    
     st.markdown("### 📍 ข้อมูลร้าน")
     st.markdown("- 🏠 **สาขา:** ห้างไอที สแควร์ ชั้น 3")
     st.markdown("- 🕒 **เวลา:** 10:00 - 20:00 น.")
     st.markdown("- 📞 **ติดต่อ:** 080-123-4567")
-    
-    st.divider()
-    
-    st.success("✅ อับดุล AI พร้อมให้บริการ")
 
 # --- Main Layout ---
-st.title("❄️ ChillPad Store")
-st.subheader("ศูนย์รวมพัดลมระบายความร้อนโน๊ตบุ๊ค")
-
-# --- Tabs ---
-tab1, tab2 = st.tabs(["💬 ปรึกษาอับดุล (AI Assistant)", "🛒 สินค้าแนะนำ"])
-
-# --- Tab 1: AI Chat ---
-with tab1:
-    st.markdown("#### 🤖 อับดุลเอ๊ย! ถามได้ตอบได้")
-    st.caption("เรื่องสเปคพัดลม รุ่นที่รองรับ หรือการรับประกัน เชิญนายจ๋าถามได้เลย")
+if menu == "💬 ปรึกษาอับดุล (AI Assistant)":
+    st.title("❄️ ปรึกษาอับดุล AI")
+    st.caption("อับดุลเอ๊ย! ถามได้ตอบได้ เรื่องสเปคพัดลม รุ่นที่รองรับ หรือการรับประกัน เชิญนายจ๋าถามได้เลย")
     
     # Quick Prompts
     st.markdown("**💡 คำถามยอดฮิต:**")
@@ -71,7 +65,7 @@ with tab1:
         with st.chat_message(msg["role"]):
             st.write(msg["content"])
 
-    # Chat Input
+    # Chat Input - อยู่ระดับ Root จะได้ยึดติดขอบจอด้านล่าง
     prompt = st.chat_input("พิมพ์ถามอับดุลได้เลยจ้ะนายจ๋า....")
 
     if quick_prompt:
@@ -110,30 +104,57 @@ with tab1:
             st.write(answer)
         st.session_state.messages.append({"role": "assistant", "content": answer})
 
-# --- Tab 2: Showcase ---
-with tab2:
-    st.markdown("#### 🔥 สินค้าขายดีประจำเดือน")
-    st.info("💡 ข้อมูลสินค้าด้านล่างเป็นเพียงตัวอย่างสำหรับโชว์ UI หน้าร้าน")
+elif menu == "🛒 สินค้าแนะนำ":
+    st.title("🔥 สินค้าขายดีประจำเดือน")
+    st.info("💡 เลือกชมสินค้าไฮไลท์ของเรา พร้อมโปรโมชั่นพิเศษ!")
+    
+    st.markdown("---")
     
     sc1, sc2, sc3 = st.columns(3)
     
     with sc1:
-        st.image("https://images.unsplash.com/photo-1614812513172-567d2fe9bf62?q=80&w=400&auto=format&fit=crop", caption="พัดลมระบายความร้อน") # ภาพตัวอย่าง
+        st.image("https://images.unsplash.com/photo-1614812513172-567d2fe9bf62?q=80&w=400&auto=format&fit=crop", caption="รุ่น Top สำหรับสายเกม")
         st.subheader("❄️ ChillMaster Pro")
-        st.write("พัดลม 6 ตัว ปรับความแรง 3 ระดับ")
-        st.metric(label="ราคา", value="฿ 890", delta="-10%")
-        st.button("ดูรายละเอียด", key="btn1", use_container_width=True)
+        st.markdown("**⭐ 4.9** (รีวิว 120+)")
+        st.metric(label="ราคาพิเศษ", value="฿ 890", delta="-10% จากราคาปกติ")
+        
+        st.caption("ความจุคลังสินค้า")
+        st.progress(25) # เหลือ 25%
+        
+        with st.expander("📝 ดูสเปคแบบละเอียด"):
+            st.markdown("- พัดลมขนาด 140mm จำนวน 2 ตัว\n- พัดลมขนาด 60mm จำนวน 4 ตัว\n- ไฟ RGB ปรับได้ 5 โหมด\n- ขาตั้งปรับได้ 3 ระดับ")
+            
+        if st.button("🛒 เพิ่มลงตะกร้า", key="btn1", use_container_width=True):
+            st.toast("✅ นำ 'ChillMaster Pro' ใส่ตะกร้าเรียบร้อยแล้ว!")
+            st.balloons()
         
     with sc2:
-        st.image("https://images.unsplash.com/photo-1585215712169-2f2fbd726912?q=80&w=400&auto=format&fit=crop", caption="พัดลมแบบพกพา")
+        st.image("https://images.unsplash.com/photo-1585215712169-2f2fbd726912?q=80&w=400&auto=format&fit=crop", caption="ขายดีอันดับ 1 สำหรับคนทำงาน")
         st.subheader("🍃 Silent Breeze V2")
-        st.write("เงียบกริบ ไร้เสียงรบกวน")
-        st.metric(label="ราคา", value="฿ 590")
-        st.button("ดูรายละเอียด", key="btn2", use_container_width=True)
+        st.markdown("**⭐ 4.7** (รีวิว 85)")
+        st.metric(label="ราคาพิเศษ", value="฿ 590", delta="สินค้าขายดี", delta_color="off")
+        
+        st.caption("ความจุคลังสินค้า")
+        st.progress(80) # เหลือ 80%
+        
+        with st.expander("📝 ดูสเปคแบบละเอียด"):
+            st.markdown("- พัดลมแกนคู่ หมุนเงียบ < 20dB\n- รองรับโน๊ตบุ๊คขนาด 13 - 15.6 นิ้ว\n- วัสดุอลูมิเนียมระบายความร้อนได้ดี")
+            
+        if st.button("🛒 เพิ่มลงตะกร้า", key="btn2", use_container_width=True):
+            st.toast("✅ นำ 'Silent Breeze V2' ใส่ตะกร้าเรียบร้อยแล้ว!")
         
     with sc3:
-        st.image("https://images.unsplash.com/photo-1593640408182-31c70c8268f5?q=80&w=400&auto=format&fit=crop", caption="ที่วางโน๊ตบุ๊ค")
+        st.image("https://images.unsplash.com/photo-1593640408182-31c70c8268f5?q=80&w=400&auto=format&fit=crop", caption="น้ำหนักเบา พกพาสะดวก")
         st.subheader("✈️ Travel Pad Lite")
-        st.write("บางเบา พกพาง่าย พับเก็บได้")
-        st.metric(label="ราคา", value="฿ 350", delta="-50 บาท")
-        st.button("ดูรายละเอียด", key="btn3", use_container_width=True)
+        st.markdown("**⭐ 4.5** (รีวิว 40)")
+        st.metric(label="ราคาพิเศษ", value="฿ 350", delta="-50 บาท (โค้ดลด)")
+        
+        st.caption("ความจุคลังสินค้า")
+        st.progress(10) # เหลือ 10%
+        
+        with st.expander("📝 ดูสเปคแบบละเอียด"):
+            st.markdown("- พับเก็บได้ ขนาดเท่าฝ่ามือ\n- น้ำหนักเพียง 250 กรัม\n- พัดลม 1 ตัว ความเร็วสูง 2500 RPM")
+            
+        if st.button("🛒 เพิ่มลงตะกร้า", key="btn3", use_container_width=True):
+            st.toast("✅ นำ 'Travel Pad Lite' ใส่ตะกร้าเรียบร้อยแล้ว!")
+            st.snow()
