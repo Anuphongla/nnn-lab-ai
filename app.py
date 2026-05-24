@@ -176,8 +176,6 @@ elif menu == "🛒 สินค้าแนะนำ":
         with cols[idx]:
             # Product Card
             with st.container(border=True):
-                st.image(product["image"], use_column_width=True)
-                
                 st.markdown(f"### {product['name']}")
                 st.markdown(f"**⭐ {product['rating']}** ({product['reviews']} รีวิว)")
                 
@@ -213,25 +211,27 @@ elif menu == "🛒 สินค้าแนะนำ":
                         "id": product['id'],
                         "name": product['name'],
                         "price": product['price'],
-                        "date": st.session_state.get("last_book_time", "2026-05-24"),
-                        "time": st.session_state.get("last_book_time", "14:30")
+                        "date": "24 พ.ค. 2566",
+                        "time": "เดี๋ยวนี้"
                     }
                     st.session_state.bookings.append(booking)
-                    
-                    # Show receipt
-                    with st.container(border=True):
-                        st.markdown("## 🧾 ใบเสร็จการจอง")
-                        st.markdown(f"**ร้าน:** ChillPad Store - ห้างไอที สแควร์ ชั้น 3")
-                        st.markdown(f"**เบอร์จอง:** `#{product['id']}`")
-                        st.markdown("---")
-                        st.markdown(f"**สินค้า:** {product['name']}")
-                        st.markdown(f"**จำนวน:** 1 ชิ้น")
-                        st.markdown(f"**ราคา:** ฿ {product['price']}")
-                        st.markdown("---")
-                        st.markdown(f"**วันที่จอง:** 24 พ.ค. 2566")
-                        st.markdown(f"**เวลา:** {st.session_state.get('last_book_time', 'เดี๋ยวนี้')}")
-                        st.markdown("---")
-                        st.markdown("**หมายเหตุ:** ขอให้แจ้งเลขจองด้านบนเมื่อมารับสินค้า")
-                        st.markdown("**ชำระเงิน:** ที่หน้าร้าน (เงินสด/QR)")
-                        st.success("✅ จองสำเร็จ! กรุณาแสดงเบอร์จองที่หน้าร้านครับ")
-                        st.balloons()
+                    st.session_state.selected_booking = booking
+    
+    # Show receipt below products if booking exists
+    if "selected_booking" in st.session_state:
+        st.markdown("---")
+        booking = st.session_state.selected_booking
+        st.markdown("## 🧾 ใบเสร็จการจอง")
+        st.markdown(f"**ร้าน:** ChillPad Store - ห้างไอที สแควร์ ชั้น 3")
+        st.markdown(f"**เบอร์จอง:** `#{booking['id']}`")
+        st.markdown("---")
+        st.markdown(f"**สินค้า:** {booking['name']}")
+        st.markdown(f"**จำนวน:** 1 ชิ้น")
+        st.markdown(f"**ราคา:** ฿ {booking['price']}")
+        st.markdown("---")
+        st.markdown(f"**วันที่จอง:** {booking['date']}")
+        st.markdown(f"**เวลา:** {booking['time']}")
+        st.markdown("---")
+        st.markdown("**หมายเหตุ:** ขอให้แจ้งเลขจองด้านบนเมื่อมารับสินค้า")
+        st.markdown("**ชำระเงิน:** ที่หน้าร้าน (เงินสด/QR)")
+        st.success("✅ จองสำเร็จ!")
