@@ -1,5 +1,6 @@
 import os
 import datetime
+import json
 
 import streamlit as st
 import gspread
@@ -10,16 +11,24 @@ from rag_engine import RAGEngine
 
 def save_booking_to_sheet(booking_data):
     try:
-        # กำหนด path ของไฟล์ credentials.json ให้อ้างอิงจากโฟลเดอร์ของไฟล์ app.py
-        current_dir = os.path.dirname(os.path.abspath(__file__))
-        default_cred_path = os.path.join(current_dir, "credentials.json")
-        
-        # อ่าน path ของไฟล์ service account และ sheet id จาก .env
-        service_account_file = os.getenv("GOOGLE_SERVICE_ACCOUNT_FILE", default_cred_path)
         sheet_id = os.getenv("GOOGLE_SHEETS_ID")
         
-        # อ่านไฟล์ service account
-        gc = gspread.service_account(filename=service_account_file)
+        # 1. เช็คว่ามี Environment Variable ชื่อ GOOGLE_CREDENTIALS_JSON ไหม (สำหรับรันบน Server)
+        env_creds = os.getenv("GOOGLE_CREDENTIALS_JSON")
+        if env_creds:
+            creds_dict = json.loads(env_creds)
+            gc = gspread.service_account_from_dict(creds_dict)
+        else:
+            # 2. ถ้าไม่มี ให้หาไฟล์ credentials.json (สำหรับรันในเครื่อง)
+            current_dir = os.path.dirname(os.path.abspath(__file__))
+            default_cred_path = os.path.join(current_dir, "credentials.json")
+            
+            service_account_file = os.getenv("GOOGLE_SERVICE_ACCOUNT_FILE", default_cred_path)
+            
+            if not os.path.exists(service_account_file):
+                return False, f"⚠️ ไม่พบการตั้งค่า GOOGLE_CREDENTIALS_JSON บน Server หรือไฟล์ {service_account_file}"
+                
+            gc = gspread.service_account(filename=service_account_file)
         
         # เปิด Google Sheets ด้วย ID ถ้ามี ไม่งั้นเปิดด้วยชื่อไฟล์
         if sheet_id:
@@ -38,8 +47,6 @@ def save_booking_to_sheet(booking_data):
         ]
         worksheet.append_row(row)
         return True, None
-    except FileNotFoundError:
-        return False, f"⚠️ ไม่พบไฟล์ {service_account_file} กรุณาตรวจสอบว่ามีไฟล์นี้อยู่ในโปรเจกต์"
     except Exception as e:
         return False, f"⚠️ ไม่สามารถบันทึกลง Google Sheets ได้: {e}"
 
