@@ -17,7 +17,7 @@ MODEL = "Qwen/Qwen2.5-7B-Instruct"  # เปลี่ยนเป็นโมเ
 
 @st.cache_resource
 def load_rag():
-    return RAGEngine("knowledge/abdul_kb.txt")
+    return RAGEngine("knowledge/chillpad_kb.txt")
 
 
 rag = load_rag()
