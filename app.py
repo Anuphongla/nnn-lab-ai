@@ -108,59 +108,130 @@ elif menu == "🛒 สินค้าแนะนำ":
     st.title("🔥 สินค้าขายดีประจำเดือน")
     st.info("💡 บริการจองสินค้าออนไลน์! สามารถมารับและชำระเงินได้ที่หน้าร้านเลยครับ")
     
+    # Initialize session state for bookings
+    if "bookings" not in st.session_state:
+        st.session_state.bookings = []
+    
     st.markdown("---")
     
-    sc1, sc2, sc3 = st.columns(3)
+    # Product data
+    products = [
+        {
+            "id": "C001",
+            "name": "❄️ ChillMaster Pro",
+            "price": 890,
+            "original_price": 990,
+            "discount": "10%",
+            "rating": "4.9",
+            "reviews": "120+",
+            "stock": 25,
+            "image": "https://images.unsplash.com/photo-1593640408182-31c70c8268f5?auto=format&fit=crop&w=400&q=80",
+            "specs": [
+                "พัดลมขนาด 140mm จำนวน 2 ตัว",
+                "พัดลมขนาด 60mm จำนวน 4 ตัว",
+                "ไฟ RGB ปรับได้ 5 โหมด",
+                "ขาตั้งปรับได้ 3 ระดับ"
+            ]
+        },
+        {
+            "id": "S002",
+            "name": "🍃 Silent Breeze V2",
+            "price": 590,
+            "original_price": 590,
+            "discount": "0",
+            "rating": "4.7",
+            "reviews": "85",
+            "stock": 80,
+            "image": "https://images.unsplash.com/photo-1585215712169-2f2fbd726912?auto=format&fit=crop&w=400&q=80",
+            "specs": [
+                "พัดลมแกนคู่ หมุนเงียบ < 20dB",
+                "รองรับโน๊ตบุ๊คขนาด 13 - 15.6 นิ้ว",
+                "วัสดุอลูมิเนียมระบายความร้อนได้ดี",
+                "ขาตั้งสีเมทัลลิก"
+            ]
+        },
+        {
+            "id": "T003",
+            "name": "✈️ Travel Pad Lite",
+            "price": 350,
+            "original_price": 400,
+            "discount": "-50 บาท",
+            "rating": "4.5",
+            "reviews": "40",
+            "stock": 10,
+            "image": "https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?auto=format&fit=crop&w=400&q=80",
+            "specs": [
+                "พับเก็บได้ ขนาดเท่าฝ่ามือ",
+                "น้ำหนักเพียง 250 กรัม",
+                "พัดลม 1 ตัว ความเร็วสูง 2500 RPM",
+                "แบตเตอรี่ 2500 mAh"
+            ]
+        }
+    ]
     
-    with sc1:
-        # ภาพเกมมิ่งที่โหลดเร็วและเสถียร
-        st.image("https://images.unsplash.com/photo-1593640408182-31c70c8268f5?auto=format&fit=crop&w=400&q=80", caption="รุ่น Top สำหรับสายเกม")
-        st.subheader("❄️ ChillMaster Pro")
-        st.markdown("**⭐ 4.9** (รีวิว 120+)")
-        st.metric(label="ราคาพิเศษ", value="฿ 890", delta="-10% จากราคาปกติ")
-        
-        st.caption("ความจุคลังสินค้า")
-        st.progress(25) # เหลือ 25%
-        
-        with st.expander("📝 ดูสเปคแบบละเอียด"):
-            st.markdown("- พัดลมขนาด 140mm จำนวน 2 ตัว\n- พัดลมขนาด 60mm จำนวน 4 ตัว\n- ไฟ RGB ปรับได้ 5 โหมด\n- ขาตั้งปรับได้ 3 ระดับ")
-            
-        if st.button("📦 จองสินค้ารับหน้าร้าน", key="btn1", use_container_width=True):
-            st.toast("✅ จอง 'ChillMaster Pro' สำเร็จ! รหัสจอง: #C001 กรุณาชำระเงินที่หน้าร้านครับ")
-            st.success("🎉 จองสำเร็จ! โปรดแจ้งรหัส **#C001** เพื่อรับสินค้าที่สาขา ไอที สแควร์")
-            st.balloons()
-        
-    with sc2:
-        # ภาพเรียบหรูสไตล์ออฟฟิศ
-        st.image("https://images.unsplash.com/photo-1585215712169-2f2fbd726912?auto=format&fit=crop&w=400&q=80", caption="ขายดีอันดับ 1 สำหรับคนทำงาน")
-        st.subheader("🍃 Silent Breeze V2")
-        st.markdown("**⭐ 4.7** (รีวิว 85)")
-        st.metric(label="ราคาพิเศษ", value="฿ 590", delta="สินค้าขายดี", delta_color="off")
-        
-        st.caption("ความจุคลังสินค้า")
-        st.progress(80) # เหลือ 80%
-        
-        with st.expander("📝 ดูสเปคแบบละเอียด"):
-            st.markdown("- พัดลมแกนคู่ หมุนเงียบ < 20dB\n- รองรับโน๊ตบุ๊คขนาด 13 - 15.6 นิ้ว\n- วัสดุอลูมิเนียมระบายความร้อนได้ดี")
-            
-        if st.button("📦 จองสินค้ารับหน้าร้าน", key="btn2", use_container_width=True):
-            st.toast("✅ จอง 'Silent Breeze V2' สำเร็จ! รหัสจอง: #S002 กรุณาชำระเงินที่หน้าร้านครับ")
-            st.success("🎉 จองสำเร็จ! โปรดแจ้งรหัส **#S002** เพื่อรับสินค้าที่สาขา ไอที สแควร์")
-        
-    with sc3:
-        # ภาพขาตั้ง/พัดลมแบบมินิมอล
-        st.image("https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?auto=format&fit=crop&w=400&q=80", caption="น้ำหนักเบา พกพาสะดวก")
-        st.subheader("✈️ Travel Pad Lite")
-        st.markdown("**⭐ 4.5** (รีวิว 40)")
-        st.metric(label="ราคาพิเศษ", value="฿ 350", delta="-50 บาท (โค้ดลด)")
-        
-        st.caption("ความจุคลังสินค้า")
-        st.progress(10) # เหลือ 10%
-        
-        with st.expander("📝 ดูสเปคแบบละเอียด"):
-            st.markdown("- พับเก็บได้ ขนาดเท่าฝ่ามือ\n- น้ำหนักเพียง 250 กรัม\n- พัดลม 1 ตัว ความเร็วสูง 2500 RPM")
-            
-        if st.button("📦 จองสินค้ารับหน้าร้าน", key="btn3", use_container_width=True):
-            st.toast("✅ จอง 'Travel Pad Lite' สำเร็จ! รหัสจอง: #T003 กรุณาชำระเงินที่หน้าร้านครับ")
-            st.success("🎉 จองสำเร็จ! โปรดแจ้งรหัส **#T003** เพื่อรับสินค้าที่สาขา ไอที สแควร์")
-            st.snow()
+    # Display products
+    cols = st.columns(3, gap="medium")
+    
+    for idx, product in enumerate(products):
+        with cols[idx]:
+            # Product Card
+            with st.container(border=True):
+                st.image(product["image"], use_column_width=True)
+                
+                st.markdown(f"### {product['name']}")
+                st.markdown(f"**⭐ {product['rating']}** ({product['reviews']} รีวิว)")
+                
+                # Price section
+                col_price1, col_price2 = st.columns(2)
+                with col_price1:
+                    st.markdown(f"### ฿ {product['price']}")
+                with col_price2:
+                    if product['discount'] != "0":
+                        st.caption(f"ลด {product['discount']}")
+                        st.caption(f"เดิม ฿ {product['original_price']}")
+                
+                st.divider()
+                
+                # Specifications
+                st.markdown("**📋 รายละเอียด:**")
+                for spec in product['specs']:
+                    st.markdown(f"• {spec}")
+                
+                st.divider()
+                
+                # Stock status
+                stock_pct = (product['stock'] / 100) * 100 if product['stock'] <= 100 else 100
+                st.caption(f"คลังสินค้า: {product['stock']} ชิ้น")
+                st.progress(min(stock_pct / 100, 1.0))
+                
+                st.divider()
+                
+                # Book button
+                if st.button(f"📦 จองเลย", key=f"book_{product['id']}", use_container_width=True):
+                    # Add booking
+                    booking = {
+                        "id": product['id'],
+                        "name": product['name'],
+                        "price": product['price'],
+                        "date": st.session_state.get("last_book_time", "2026-05-24"),
+                        "time": st.session_state.get("last_book_time", "14:30")
+                    }
+                    st.session_state.bookings.append(booking)
+                    
+                    # Show receipt
+                    with st.container(border=True):
+                        st.markdown("## 🧾 ใบเสร็จการจอง")
+                        st.markdown(f"**ร้าน:** ChillPad Store - ห้างไอที สแควร์ ชั้น 3")
+                        st.markdown(f"**เบอร์จอง:** `#{product['id']}`")
+                        st.markdown("---")
+                        st.markdown(f"**สินค้า:** {product['name']}")
+                        st.markdown(f"**จำนวน:** 1 ชิ้น")
+                        st.markdown(f"**ราคา:** ฿ {product['price']}")
+                        st.markdown("---")
+                        st.markdown(f"**วันที่จอง:** 24 พ.ค. 2566")
+                        st.markdown(f"**เวลา:** {st.session_state.get('last_book_time', 'เดี๋ยวนี้')}")
+                        st.markdown("---")
+                        st.markdown("**หมายเหตุ:** ขอให้แจ้งเลขจองด้านบนเมื่อมารับสินค้า")
+                        st.markdown("**ชำระเงิน:** ที่หน้าร้าน (เงินสด/QR)")
+                        st.success("✅ จองสำเร็จ! กรุณาแสดงเบอร์จองที่หน้าร้านครับ")
+                        st.balloons()
