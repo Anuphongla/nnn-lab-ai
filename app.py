@@ -113,7 +113,8 @@ elif menu == "🛒 สินค้าแนะนำ":
     sc1, sc2, sc3 = st.columns(3)
     
     with sc1:
-        st.image("https://placehold.co/400x300/e0f7fa/004d99?text=ChillMaster+Pro", caption="รุ่น Top สำหรับสายเกม")
+        # ภาพเกมมิ่งที่โหลดเร็วและเสถียร
+        st.image("https://images.unsplash.com/photo-1593640408182-31c70c8268f5?auto=format&fit=crop&w=400&q=80", caption="รุ่น Top สำหรับสายเกม")
         st.subheader("❄️ ChillMaster Pro")
         st.markdown("**⭐ 4.9** (รีวิว 120+)")
         st.metric(label="ราคาพิเศษ", value="฿ 890", delta="-10% จากราคาปกติ")
@@ -130,7 +131,8 @@ elif menu == "🛒 สินค้าแนะนำ":
             st.balloons()
         
     with sc2:
-        st.image("https://placehold.co/400x300/e0f7fa/004d99?text=Silent+Breeze+V2", caption="ขายดีอันดับ 1 สำหรับคนทำงาน")
+        # ภาพเรียบหรูสไตล์ออฟฟิศ
+        st.image("https://images.unsplash.com/photo-1585215712169-2f2fbd726912?auto=format&fit=crop&w=400&q=80", caption="ขายดีอันดับ 1 สำหรับคนทำงาน")
         st.subheader("🍃 Silent Breeze V2")
         st.markdown("**⭐ 4.7** (รีวิว 85)")
         st.metric(label="ราคาพิเศษ", value="฿ 590", delta="สินค้าขายดี", delta_color="off")
@@ -146,7 +148,8 @@ elif menu == "🛒 สินค้าแนะนำ":
             st.success("🎉 จองสำเร็จ! โปรดแจ้งรหัส **#S002** เพื่อรับสินค้าที่สาขา ไอที สแควร์")
         
     with sc3:
-        st.image("https://placehold.co/400x300/e0f7fa/004d99?text=Travel+Pad+Lite", caption="น้ำหนักเบา พกพาสะดวก")
+        # ภาพขาตั้ง/พัดลมแบบมินิมอล
+        st.image("https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?auto=format&fit=crop&w=400&q=80", caption="น้ำหนักเบา พกพาสะดวก")
         st.subheader("✈️ Travel Pad Lite")
         st.markdown("**⭐ 4.5** (รีวิว 40)")
         st.metric(label="ราคาพิเศษ", value="฿ 350", delta="-50 บาท (โค้ดลด)")
