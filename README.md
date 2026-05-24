@@ -1,7 +1,7 @@
 ---
 title: ChillPad Store AI
 emoji: ❄️
-colorFrom: cyan
+colorFrom: blue
 colorTo: blue
 sdk: streamlit
 sdk_version: "1.43.0"
