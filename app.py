@@ -59,45 +59,47 @@ MODEL = "Qwen/Qwen2.5-7B-Instruct"
 
 @st.cache_resource
 def load_rag():
-    return RAGEngine("knowledge/chillpad_kb.txt")
+    return RAGEngine("knowledge/nnnlab_kb.txt")
 
 rag = load_rag()
 
 # --- Sidebar ---
 with st.sidebar:
-    st.markdown("## ❄️ ChillPad Store")
-    st.caption("ร้านจำหน่ายพัดลมระบายความร้อนโน๊ตบุ๊คอันดับ 1")
+    st.markdown("## ☕ NnnLab°")
+    st.caption("ร้านกาแฟและนมสดที่อร่อยที่สุด")
     
     st.divider()
     
     # Navigation
-    menu = st.radio("เมนูหลัก", ["💬 ปรึกษาอับดุล (AI Assistant)", "🛒 สินค้าแนะนำ"])
+    menu = st.radio("เมนูหลัก", ["💬 ปรึกษา Demi (AI Assistant)", "🛒 สินค้าแนะนำ"])
     
     st.divider()
     
     st.markdown("### 📍 ข้อมูลร้าน")
-    st.markdown("- 🏠 **สาขา:** ห้างไอที สแควร์ ชั้น 3")
-    st.markdown("- 🕒 **เวลา:** 10:00 - 20:00 น.")
-    st.markdown("- 📞 **ติดต่อ:** 080-123-4567")
+    st.markdown("- 🏠 **สาขา:** หน้าหอพักวิวะ ถนนประชาสโมสร")
+    st.markdown("- 🕒 **เวลา:** 20:00 - 01:00 น.")
+    st.markdown("- 📞 **ติดต่อ:** DM Instagram @Nnnlab.rmuti")
 
 # --- Main Layout ---
-if menu == "💬 ปรึกษาอับดุล (AI Assistant)":
-    st.title("❄️ ปรึกษาอับดุล AI")
-    st.caption("อับดุลเอ๊ย! ถามได้ตอบได้ เรื่องสเปคพัดลม รุ่นที่รองรับ หรือการรับประกัน เชิญนายจ๋าถามได้เลย")
+if menu == "💬 ปรึกษา Demi (AI Assistant)":
+    st.title("☕ ปรึกษา Demi AI")
+    st.caption("สอบถามเมนูเครื่องดื่ม เวลาเปิดปิด หรือข้อมูลร้าน NnnLab° ได้เลยครับ")
     
     # Quick Prompts
     st.markdown("**💡 คำถามยอดฮิต:**")
-    col1, col2, col3, col4 = st.columns(4)
+    col1, col2, col3, col4, col5 = st.columns(5)
     quick_prompt = None
     
-    if col1.button("💻 โน๊ตบุ๊ค 15.6 นิ้ว?", use_container_width=True):
-        quick_prompt = "โน๊ตบุ๊คขนาด 15.6 นิ้ว แนะนำรุ่นไหนดีครับ"
-    if col2.button("🤫 รุ่นเสียงเงียบ?", use_container_width=True):
-        quick_prompt = "มีรุ่นไหนที่เสียงเงียบๆ เหมาะกับใช้ในห้องนอนไหมครับ"
-    if col3.button("🎮 สายเกมมิ่ง?", use_container_width=True):
-        quick_prompt = "มีรุ่นไหนระบายความร้อนได้ดีที่สุดสำหรับเล่นเกมไหมครับ"
-    if col4.button("🛡️ การรับประกัน?", use_container_width=True):
-        quick_prompt = "สินค้ามีรับประกันกี่เดือน และเคลมยังไงครับ"
+    if col1.button("1️⃣ ลาเต้น้ำผึ้ง?", use_container_width=True):
+        quick_prompt = "ในลาเต้น้ำผึ้งมีน้ำตาลไหม"
+    if col2.button("2️⃣ ปิดกี่โมง?", use_container_width=True):
+        quick_prompt = "ร้านเปิดถึงกี่โมง"
+    if col3.button("3️⃣ เมนูไม่หวาน?", use_container_width=True):
+        quick_prompt = "มีเมนูไม่หวานไหม"
+    if col4.button("4️⃣ Delivery?", use_container_width=True):
+        quick_prompt = "Delivery ได้ไหม"
+    if col5.button("5️⃣ นอก KB?", use_container_width=True):
+        quick_prompt = "ที่ร้านมีที่จอดรถยนต์ไหมครับ"
 
     st.divider()
 
@@ -110,7 +112,7 @@ if menu == "💬 ปรึกษาอับดุล (AI Assistant)":
             st.write(msg["content"])
 
     # Chat Input - อยู่ระดับ Root จะได้ยึดติดขอบจอด้านล่าง
-    prompt = st.chat_input("พิมพ์ถามอับดุลได้เลยจ้ะนายจ๋า....")
+    prompt = st.chat_input("พิมพ์ถาม Demi ได้เลยครับ....")
 
     if quick_prompt:
         prompt = quick_prompt
@@ -122,28 +124,32 @@ if menu == "💬 ปรึกษาอับดุล (AI Assistant)":
 
         # RAG Search
         with st.chat_message("assistant"):
-            with st.spinner("อับดุลกำลังค้นหาข้อมูล..."):
+            with st.spinner("Demi กำลังค้นหาข้อมูล..."):
                 context_chunks = rag.search(prompt, top_k=3)
                 context = "\n---\n".join(context_chunks)
 
-                full_prompt = f"""คุณคือ "อับดุล" ผู้ช่วย AI ประจำร้าน ChillPad Store (ร้านขายพัดลมระบายความร้อนโน๊ตบุ๊ค)
-คาแรคเตอร์ของคุณ: เป็นมิตร กระตือรือร้น เรียกผู้ใช้งานว่า "นายจ๋า" หรือ "คุณลูกค้า" มีความเป็นพ่อค้าที่รอบรู้ (อับดุลเอ๊ย ถามได้ตอบได้)
+                system_prompt = f"""คุณคือ "Demi" ผู้ช่วย AI ประจำร้าน NnnLab° (ร้านกาแฟและนมสด)
+คาแรคเตอร์ของคุณ: เป็นมิตร สุภาพ ให้บริการตอบคำถามเกี่ยวกับร้านกาแฟ
 คำสั่งพิเศษ: 
 1. ตอบคำถามโดยใช้ข้อมูลอ้างอิงจาก "ข้อมูลร้าน" ด้านล่างนี้เท่านั้น
-2. หากคำถามไหนไม่มีในข้อมูล ให้ตอบอย่างสุภาพว่า "อับดุลไม่ทราบจริงๆ จ้ะนายจ๋า ลองติดต่อแอดมินดูนะจ๊ะ" ห้ามแต่งข้อมูลเองเด็ดขาด
-3. จัดรูปแบบข้อความให้อ่านง่าย ใช้ Bullet point หรือ Emoji (เช่น 💻, 💰, ❄️, 🛡️) ประกอบให้สวยงาม
+2. หากคำถามไหนไม่มีในข้อมูล ให้ตอบอย่างสุภาพว่า "ขออภัยครับ ไม่ทราบข้อมูลในส่วนนี้จริงๆ ครับ รบกวนติดต่อสอบถามแอดมินทาง DM Instagram @Nnnlab.rmuti นะครับ" ห้ามแต่งข้อมูลเองเด็ดขาด
+3. จัดรูปแบบข้อความให้อ่านง่าย ใช้ Bullet point หรือ Emoji ประกอบให้สวยงาม
 
 ข้อมูลร้าน:
 {context}
-
-คำถามจากนายจ๋า: {prompt}
 """
                 try:
-                    messages = [{"role": "user", "content": full_prompt}]
+                    # ส่งประวัติการแชท (History) ไปให้บอทเพื่อให้บอทจำบริบทได้
+                    # โดยใส่ข้อมูลร้านค้าและการตั้งค่าบอทไว้ใน system prompt
+                    messages = [{"role": "system", "content": system_prompt}]
+                    # ดึงประวัติการสนทนา 4 ข้อความล่าสุด (เพื่อไม่ให้เปลือง Token)
+                    for msg in st.session_state.messages[-4:]:
+                        messages.append({"role": msg["role"], "content": msg["content"]})
+                        
                     response = client.chat_completion(model=MODEL, messages=messages, max_tokens=800)
                     answer = response.choices[0].message.content
                 except Exception as e:
-                    answer = f"ขออภัยจ้ะนายจ๋า ระบบของอับดุลมีปัญหาเล็กน้อย ({e})"
+                    answer = f"ขออภัยครับ ระบบมีปัญหาเล็กน้อย ({e})"
 
             st.write(answer)
         st.session_state.messages.append({"role": "assistant", "content": answer})
