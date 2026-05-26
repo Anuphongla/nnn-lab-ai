@@ -211,7 +211,7 @@ elif menu == "🛒 สินค้าแนะนำ":
                 "แบตเตอรี่ 2500 mAh"
             ]
         }
-    ]
+    ] 
     
     # Display products
     cols = st.columns(3, gap="medium")
