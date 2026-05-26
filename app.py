@@ -89,7 +89,8 @@ if menu == "💬 ปรึกษา Demi (AI Assistant)":
     st.markdown("**💡 คำถามยอดฮิต:**")
     col1, col2, col3, col4, col5 = st.columns(5)
     quick_prompt = None
-    
+     
+     
     if col1.button("1️⃣ ลาเต้น้ำผึ้ง?", use_container_width=True):
         quick_prompt = "ในลาเต้น้ำผึ้งมีน้ำตาลไหม"
     if col2.button("2️⃣ ปิดกี่โมง?", use_container_width=True):
